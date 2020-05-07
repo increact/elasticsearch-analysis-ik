@@ -158,10 +158,10 @@ public class Dictionary {
 						// 建立监控线程
 						for (String location : dictionaryMap.get(cfg.getRemoteDictName()).getRemoteExtDictionarys()) {
 							// 10 秒是初始延迟可以修改的 60是间隔时间 单位秒
-							pool.scheduleAtFixedRate(new Monitor(location), 10, 60, TimeUnit.SECONDS);
+							pool.scheduleAtFixedRate(new Monitor(location, cfg.getRemoteDictName()), 10, 60, TimeUnit.SECONDS);
 						}
 						for (String location : dictionaryMap.get(cfg.getRemoteDictName()).getRemoteExtStopWordDictionarys()) {
-							pool.scheduleAtFixedRate(new Monitor(location), 10, 60, TimeUnit.SECONDS);
+							pool.scheduleAtFixedRate(new Monitor(location, cfg.getRemoteDictName()), 10, 60, TimeUnit.SECONDS);
 						}
 					}
 
