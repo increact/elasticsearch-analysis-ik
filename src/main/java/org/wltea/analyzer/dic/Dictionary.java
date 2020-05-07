@@ -240,7 +240,9 @@ public class Dictionary {
 			String[] filePaths = remoteExtDictCfg.split(";");
 			for (String filePath : filePaths) {
 				if (filePath != null && !"".equals(filePath.trim())) {
-					filePath += "/" + this.configuration.getRemoteDictName();
+					if (this.configuration.getRemoteDictName()!="") {
+						filePath += "/" + this.configuration.getRemoteDictName();
+					}
 					remoteExtDictFiles.add(filePath);
 				}
 			}
@@ -273,7 +275,9 @@ public class Dictionary {
 			String[] filePaths = remoteExtStopWordDictCfg.split(";");
 			for (String filePath : filePaths) {
 				if (filePath != null && !"".equals(filePath.trim())) {
-					filePath += "/" + this.configuration.getRemoteDictName();
+					if (this.configuration.getRemoteDictName()!="") {
+						filePath += "/" + this.configuration.getRemoteDictName();
+					}
 					remoteExtStopWordDictFiles.add(filePath);
 				}
 			}
