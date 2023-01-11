@@ -1,3 +1,7 @@
+# Folked version only for changing the tokenizer and analyzer name to our own name
+
+## Original Readme below
+
 IK Analysis for Elasticsearch
 =============================
 
