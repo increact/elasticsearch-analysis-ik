@@ -1,3 +1,71 @@
+# IK Analysis for Elasticsearch, with custom remote dictionary for each index
+
+This repository combines code from Serendo's custom dictionary for each index, and latest master modification for ES 8.x version from origin repo.
+
+Origin Repository:
+https://github.com/medcl/elasticsearch-analysis-ik
+
+Custom dictionary branch:
+https://github.com/Serendo/elasticsearch-analysis-ik/tree/custom_dict_6.x
+
+## How to use:
+
+This plugin must be built and upload to elastic cloud to use it. Or you could just install it locally for sure. Check How to build section for building procedure.
+
+Some steps is originally from https://github.com/medcl/elasticsearch-analysis-ik/pull/777
+
+1. Update the `remote_ext_dict` value in `config/IKAnalyzer.cfg.xml` to be the path of dictionary folder e.g. for travoweee staging, use `https://travoweee-stg.s3.ap-southeast-1.amazonaws.com/es_dictionary`
+
+2. When creating index / index template, do the following to setup custom analyzer:
+
+```
+PUT ik-test
+{
+    "settings": {
+        "analysis.analyzer": {
+            "custom_ik": {
+                "type": "ik_smart",
+                "enable_remote_dict": true,
+                "custom_dict_name": "custom_dict"
+            }
+        }
+    },
+    "mappings": {
+        "_doc": {
+            "properties": {
+                "field1": {
+                    "type": "text",
+                    "analyzer": "custom_ik"
+                }
+            }
+        }
+    }
+}
+```
+3. Use `https://travoweee-stg.s3.ap-southeast-1.amazonaws.com/es_dictionary` as example:
+if `custom_dict_name` is not provided, `https://travoweee-stg.s3.ap-southeast-1.amazonaws.com/es_dictionary` will be called to retrieve dictionary.
+if `custom_dict_name` is provided, in the example above is `custom_dict`, `https://travoweee-stg.s3.ap-southeast-1.amazonaws.com/es_dictionary/custom_dict` will be called to retrieve dictionary.
+
+
+## How to build
+
+Currently the version of this plugin is `8.4.3`. If you want to update the version, change `elasticsearch.version` from the `pom.xml` file on root, then rebuild the plugin and upload it to elastic cloud.
+
+Beiefly checked ik historical commit, usually there's almost nothing changed even between major version, but still you should check carefully and test it on staging instance first if you want to upgrade it. You should also merge latest master branch code to our repository between each upgrade.
+
+### Remember to Update the `remote_ext_dict` value in `config/IKAnalyzer.cfg.xml` before build
+
+1. Install OpenJDK 1.8
+2. Install Apache Maven 3.8
+3. On root directory, run `mvn install`
+4. Then `mvn clean`
+5. Then `mvn compile`
+6. Last but not least, run `mvn package`. You could find the zip file in `target/releases`
+
+
+Original Doc Below
+=
+
 IK Analysis for Elasticsearch
 =============================
 
