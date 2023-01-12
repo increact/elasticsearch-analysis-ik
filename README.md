@@ -42,6 +42,8 @@ PUT ik-test
     }
 }
 ```
+Beware that although elasticsearch js client's typescript type does not support `"type": "ik_smart"` value, it's a must to make the custom dictionary name work. If you use `custom` instead, the custom dictionary won't be feteched.
+
 3. Use `https://travoweee-stg.s3.ap-southeast-1.amazonaws.com/es_dictionary` as example:
 if `custom_dict_name` is not provided, `https://travoweee-stg.s3.ap-southeast-1.amazonaws.com/es_dictionary` will be called to retrieve dictionary.
 if `custom_dict_name` is provided, in the example above is `custom_dict`, `https://travoweee-stg.s3.ap-southeast-1.amazonaws.com/es_dictionary/custom_dict` will be called to retrieve dictionary.
